@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { redisStore } from 'cache-manager-redis-yet';
+import { RestaurentController } from './restaurents/restaurent.controller';
+import { RestaurentService } from './restaurents/restaurent.service';
 
 @Module({
   imports: [
@@ -14,13 +16,14 @@ import { redisStore } from 'cache-manager-redis-yet';
       port: 6379,
     }),
   ],
-  controllers: [AppController],
+  controllers: [AppController, RestaurentController],
   providers: [
     AppService,
     {
       provide: APP_INTERCEPTOR,
       useClass: CacheInterceptor,
     },
+    RestaurentService,
   ],
 })
 export class AppModule {}

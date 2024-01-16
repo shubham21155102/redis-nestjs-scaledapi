@@ -1,14 +1,17 @@
+# ## 
+# GET http://localhost:3000/api/v1
+
+# ##
+# GET http://localhost:3000/api/v1/health
+
+# ##
+# GET http://localhost:3000/api/v1/getuser/12
+
+# ##
+# GET http://localhost:3000/api/v1/clearall
+
+# ##
+# GET http://localhost:3000/api/v1/search?query=delectus aut autem
+
 ## 
-GET http://localhost:3000/api/v1
-
-##
-GET http://localhost:3000/api/v1/health
-
-##
-GET http://localhost:3000/api/v1/getuser/12
-
-##
-GET http://localhost:3000/api/v1/clearall
-
-##
-GET http://localhost:3000/api/v1/search?query=delectus aut autem
+GET http://localhost:3000/api/v2/allname
