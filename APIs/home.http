@@ -1,0 +1,11 @@
+## 
+GET http://localhost:3000/api/v1
+
+##
+GET http://localhost:3000/api/v1/health
+
+##
+GET http://localhost:3000/api/v1/getuser/12
+
+##
+GET http://localhost:3000/api/v1/clearall
