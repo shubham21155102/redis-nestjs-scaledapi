@@ -1,4 +1,4 @@
-import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseInterceptors } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 @CacheTTL(30000)
@@ -30,10 +30,9 @@ export class AppController {
     const result = await this.appService.getDataById(idd);
     return result;
   }
-  @Get(`search:query`)
-  async search(@Param() params: any): Promise<string> {
-    console.log(params.query);
-    const query = params.query;
+  @Get('search')
+  async search(@Query('query') query: string): Promise<string> {
+    console.log(query);
     const result = await this.appService.searchByTitle(query);
     return result;
   }

@@ -68,6 +68,7 @@ export class AppService {
     });
   }
   async searchByTitle(title: string): Promise<string> {
+    console.log(title);
     return new Promise<string>(async (resolve) => {
       const cachedTodos = await this.cacheManager.get(title);
       const x = JSON.stringify(cachedTodos);
