@@ -2,9 +2,16 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable, Param } from '@nestjs/common';
 import fetch from 'node-fetch';
 import { Cache } from 'cache-manager';
+import datas from "./restaurents/json/clg";
+import { InjectRepository } from '@nestjs/typeorm';
+import { College } from './restaurents/json/clg.entity';
+import { Repository } from 'typeorm';
 @Injectable()
 export class AppService {
-  constructor(@Inject(CACHE_MANAGER) private readonly cacheManager: Cache) {}
+  constructor(
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+    @InjectRepository(College) private readonly collegeRepository: Repository<College>,
+  ) {}
   async getHello(): Promise<string> {
     return new Promise<string>(async (resolve) => {
       const cachedTodos = await this.cacheManager.get('todos');
@@ -90,6 +97,34 @@ export class AppService {
         resolve(data);
       } catch (e) {
         resolve(JSON.stringify(e));
+      }
+    });
+  }
+  async coollegeList(): Promise<College[]> {
+    return new Promise<College[]>(async (resolve) => {
+      const cachedTodos = await this.cacheManager.get('collegeList');
+      const x = JSON.stringify(cachedTodos);
+      if (cachedTodos) {
+        console.log(`CacheHit`);
+        resolve(JSON.parse(x));
+        return;
+      }
+      try {
+        console.log(`ApiCall`);
+        // const data = datas.map((collegeData) => ({
+        //   name: collegeData.name,
+        //   c_code: collegeData.alpha_two_code,
+        //   country: collegeData.country,
+        // }));
+        // for (const collegeData of data) {
+        //   const college = this.collegeRepository.create(collegeData);
+        //   await this.collegeRepository.save(college);
+        // }
+        const savedColleges = await this.collegeRepository.find();
+        await this.cacheManager.set('collegeList', JSON.stringify(savedColleges));
+        resolve(savedColleges);
+      } catch (e) {
+        resolve(e);
       }
     });
   }

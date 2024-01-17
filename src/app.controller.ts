@@ -1,6 +1,7 @@
 import { Controller, Get, Param, Query, UseInterceptors } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+import { College } from './restaurents/json/clg.entity';
 @CacheTTL(30000)
 @UseInterceptors(CacheInterceptor)
 @Controller(`/api/v1`)
@@ -34,6 +35,11 @@ export class AppController {
   async search(@Query('query') query: string): Promise<string> {
     console.log(query);
     const result = await this.appService.searchByTitle(query);
+    return result;
+  }
+  @Get('allcolleges')
+  async allcolleges(): Promise<College[]> {
+    const result = await this.appService.coollegeList();
     return result;
   }
 }
